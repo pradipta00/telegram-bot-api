@@ -380,6 +380,22 @@ func (bot *BotAPI) sendChattable(config Chattable) (Message, error) {
 	return message, nil
 }
 
+// EditMessageText update sent message.
+func (bot *BotAPI) EditMessageText(config Chattable) (Message, error) {
+	v, err := config.values()
+	if err != nil {
+		return Message{}, err
+	}
+
+	message, err := bot.makeMessageRequest("editMessageText", v)
+
+	if err != nil {
+		return Message{}, err
+	}
+
+	return message, nil
+}
+
 // GetUserProfilePhotos gets a user's profile photos.
 //
 // It requires UserID.

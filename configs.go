@@ -66,6 +66,7 @@ type Fileable interface {
 // BaseChat is base type for all chat config types.
 type BaseChat struct {
 	ChatID              int64 // required
+	MessageID           int
 	ChannelUsername     string
 	ReplyToMessageID    int
 	ReplyMarkup         interface{}
@@ -91,6 +92,10 @@ func (chat *BaseChat) values() (url.Values, error) {
 		v.Add("chat_id", chat.ChannelUsername)
 	} else {
 		v.Add("chat_id", strconv.FormatInt(chat.ChatID, 10))
+	}
+
+	if chat.MessageID != 0 {
+		v.Add("message_id", strconv.FormatInt(int64(chat.MessageID), 10))
 	}
 
 	if chat.ReplyToMessageID != 0 {
