@@ -43,6 +43,20 @@ func NewBotAPI(token string) (*BotAPI, error) {
 	return NewBotAPIWithClient(token, APIEndpoint, &http.Client{})
 }
 
+// NewBotOffline creates a new BotAPI instance.
+// It requires a token and user, provided by @BotFather on Telegram.
+func NewBotOffline(token string, user User) *BotAPI {
+	return &BotAPI{
+		Token:           token,
+		Client:          &http.Client{},
+		Buffer:          100,
+		shutdownChannel: make(chan interface{}),
+		apiEndpoint:     APIEndpoint,
+
+		Self: user,
+	}
+}
+
 // NewBotAPIWithAPIEndpoint creates a new BotAPI instance
 // and allows you to pass API endpoint.
 //
